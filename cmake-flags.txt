@@ -1,0 +1,50 @@
+# CMake flags for the OpenCV 5.0.0 headless CUDA + GStreamer build.
+# Rule: mirror the PyPI 5.0.0.93 build (reference/pypi-5.0.0.93-buildinfo.txt) and differ only
+# where the configure-summary check in build.sh (w3_check) lists an intended difference. One or more whitespace-separated flags per line; '#' starts a
+# comment line. build.sh expands the placeholders:
+#   @BUILD@               the build root ($BUILD)
+#   @CUDA_ARCH_BIN@       CUDA_ARCH_BIN from pins.env
+#   @EXTRA_MODULES_PATH@  <opencv_contrib>/modules/<m> for every m in CUDA_MODULES (pins.env), ';'-joined
+# The flags reach setup.py through CMAKE_ARGS (scikit-build) and the pilot's cmake call directly.
+
+# CUDA: Orin GPU (cc 8.7), SASS only (no PTX), no fast math. cuDNN / DNN-CUDA off (cv2.dnn is not
+# used); NVCUVID / NVENC off (libnvcuvid.so.1 and libnvidia-encode.so.1 are absent here).
+-DWITH_CUDA=ON -DCUDA_ARCH_BIN=@CUDA_ARCH_BIN@ -DCUDA_ARCH_PTX= -DCUDA_FAST_MATH=OFF
+-DWITH_CUBLAS=ON -DWITH_CUFFT=ON -DWITH_CUDNN=OFF -DOPENCV_DNN_CUDA=OFF
+-DWITH_NVCUVID=OFF -DWITH_NVCUVENC=OFF
+-DOPENCV_EXTRA_MODULES_PATH=@EXTRA_MODULES_PATH@
+
+# Video / system libraries linked dynamically from the board (GStreamer is the point of this build).
+-DWITH_GSTREAMER=ON -DWITH_FFMPEG=ON -DWITH_V4L=ON -DWITH_LAPACK=ON
+
+# OpenCL off: the Orin has no OpenCL driver, so PyPI's dynamically loaded
+# OpenCL runtime never finds a device here; cv2.UMat falls back to the CPU in both builds.
+-DWITH_OPENCL=OFF
+
+# Off as in the PyPI build (pthreads parallel framework) or because PyPI does not use them.
+-DWITH_TBB=OFF -DWITH_OPENMP=OFF -DWITH_EIGEN=OFF -DWITH_1394=OFF -DWITH_GPHOTO2=OFF
+-DWITH_OPENEXR=OFF -DWITH_VTK=OFF -DWITH_VA=OFF -DWITH_AVIF=OFF
+
+# Custom HAL as PyPI; image codecs built from 3rdparty as PyPI (JPEG decode must match).
+-DWITH_KLEIDICV=ON -DWITH_CAROTENE=ON -DOPENCV_ENABLE_NONFREE=OFF
+-DBUILD_JPEG=ON -DBUILD_TIFF=ON -DBUILD_WEBP=ON -DBUILD_OPENJPEG=ON
+
+# CPU baseline pinned: PyPI requested DETECT and got "NEON FP16"; on AArch64 NEON and FP16 need
+# no compiler flag (CPU_NEON_FLAGS_ON / CPU_FP16_FLAGS_ON are unset in OpenCVCompilerOptimizations.cmake),
+# so this list reproduces the same baseline independent of CFLAGS/-march in the environment.
+# OpenCV warns that AArch64 is "designed to work with DETECT" - expected. The pilot's configure
+# summary must still read "Baseline: NEON FP16" (build.sh pilot checks it before compiling).
+# Dispatch without NEON_BF16: the Cortex-A78AE has no BF16 (/proc/cpuinfo
+# lists asimddp and asimdhp, no bf16), so PyPI's BF16 code path is never selected on this board.
+-DCPU_BASELINE=NEON,FP16 -DCPU_DISPATCH=NEON_FP16,NEON_DOTPROD
+
+# No install RPATH: CUDA, NPP, cuBLAS, GStreamer and FFmpeg resolve through the system ld cache.
+# Setting CMAKE_INSTALL_RPATH= / CMAKE_INSTALL_RPATH_USE_LINK_PATH=OFF is not enough: OpenCV's
+# cmake/OpenCVInstallLayout.cmake:100 sets CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE unconditionally,
+# and OpenCVDetectCUDA.cmake:206 link_directories() puts /usr/local/cuda/lib64 on the link line,
+# so cv2.abi3.so was installed with RUNPATH /usr/local/cuda/lib64. SKIP_INSTALL_RPATH makes the
+# install step strip it (cmake_install.cmake: RPATH_CHANGE ... NEW_RPATH ""); the link is unchanged.
+-DCMAKE_SKIP_INSTALL_RPATH=ON
+
+# Cache of configure-time downloads (KleidiCV and other 3rdparty archives).
+-DOPENCV_DOWNLOAD_PATH=@BUILD@/downloads

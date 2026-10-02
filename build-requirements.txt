@@ -1,0 +1,15 @@
+# Build requirements of the opencv-python build, hash-pinned.
+# Installed into $BV only: pip install --require-hashes --no-deps -r build-requirements.txt
+# Pins follow opencv-python tag 93 pyproject.toml [build-system] (numpy==2.0.2, setuptools==59.2.0,
+# scikit-build, packaging, pip) plus scikit-build's own runtime deps (distro, tomli), because
+# --no-deps installs nothing implicitly; wheel supplies bdist_wheel for setuptools 59.2.0.
+# Regenerate (README "Updating for a new release"): pip download --no-deps <name>==<version> -d <dir>, then
+# pip hash <file> per file; the hash is that of the file actually downloaded (aarch64, cp310).
+numpy==2.0.2 --hash=sha256:2da5960c3cf0df7eafefd806d4e612c5e19358de82cb3c343631188991566ccd
+scikit-build==0.19.1 --hash=sha256:a4fa78a7222ca40d5e8bae6700514bbf7efea4346efd9fc1f8cfca837cd1de71
+setuptools==59.2.0 --hash=sha256:4adde3d1e1c89bde1c643c64d89cdd94cbfd8c75252ee459d4500bccb9c7d05d
+packaging==26.3 --hash=sha256:d7193f7c8e4e93f444fde0262bf90af30e16fa0ad0ad44cb553c87339b23cd1c
+pip==26.2.1 --hash=sha256:71138adf1f4ca900cdb7d289c21b7494329f2332b6d85f0e1c42108c0384ed3e
+wheel==0.48.0 --hash=sha256:3217dcc807155e45db462d7ef2431f5ddda0d7273b700d05a67b271ceb1287ab
+distro==1.9.0 --hash=sha256:7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2
+tomli==2.4.1 --hash=sha256:0d85819802132122da43cb86656f8d1f8c6587d54ae7dcaf30e90533028b49fe

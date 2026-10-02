@@ -1,0 +1,10 @@
+# build products and local state never belong in this repository
+local.env
+*.whl
+*.log
+*.csv
+*.status
+__pycache__/
+*.pyc
+.venv/
+venv/

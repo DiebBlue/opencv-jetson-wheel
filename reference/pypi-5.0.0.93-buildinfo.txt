@@ -1,0 +1,118 @@
+
+General configuration for OpenCV 5.0.0 =====================================
+  Version control:               5.0.0
+
+  Platform:
+    Timestamp:                   2026-07-01T14:31:05Z
+    Host:                        Linux 6.8.0-51-generic aarch64
+    CMake:                       4.3.2
+    CMake generator:             Unix Makefiles
+    CMake build tool:            /bin/gmake
+    Configuration:               Release
+    Algorithm Hint:              ALGO_HINT_ACCURATE
+
+  CPU/HW features:
+    Baseline:                    NEON FP16
+      requested:                 DETECT
+    Dispatched code generation:  NEON_DOTPROD NEON_FP16 NEON_BF16
+      requested:                 NEON_FP16 NEON_BF16 NEON_DOTPROD
+      NEON_DOTPROD (3 files):    + NEON_DOTPROD
+      NEON_FP16 (6 files):       + NEON_FP16
+      NEON_BF16 (0 files):       + NEON_BF16
+
+  C/C++:
+    Built as dynamic libs?:      NO
+    C++ standard:                17
+    C++ Compiler:                /opt/rh/gcc-toolset-14/root/usr/bin/c++  (ver 14.2.1)
+    C++ flags (Release):         -Wl,-strip-all   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -O3 -DNDEBUG  -DNDEBUG
+    C++ flags (Debug):           -Wl,-strip-all   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections  -fvisibility=hidden -fvisibility-inlines-hidden -g  -O0 -DDEBUG -D_DEBUG
+    C Compiler:                  /opt/rh/gcc-toolset-14/root/usr/bin/cc
+    C flags (Release):           -Wl,-strip-all   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections  -fvisibility=hidden -O3 -DNDEBUG  -DNDEBUG
+    C flags (Debug):             -Wl,-strip-all   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -pthread -fomit-frame-pointer -ffunction-sections -fdata-sections  -fvisibility=hidden -g  -O0 -DDEBUG -D_DEBUG
+    Linker flags (Release):      -L/ffmpeg_build/lib  -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  
+    Linker flags (Debug):        -L/ffmpeg_build/lib  -Wl,--gc-sections -Wl,--as-needed -Wl,--no-undefined  
+    ccache:                      YES
+    Precompiled headers:         NO
+    Extra dependencies:          avif /usr/local/lib/libpng.so /usr/lib64/libz.so /usr/lib64/libopenblasp.so dl m pthread rt
+    3rdparty dependencies:       ittnotify libprotobuf libjpeg-turbo libwebp libtiff libopenjp2 tegra_hal kleidicv_hal kleidicv kleidicv_thread
+
+  OpenCV modules:
+    To be built:                 calib core dnn features flann geometry highgui imgcodecs imgproc objdetect photo ptcloud python3 stereo stitching video videoio
+    Disabled:                    world
+    Disabled by dependency:      -
+    Unavailable:                 java ts
+    Applications:                -
+    Documentation:               NO
+    Non-free algorithms:         NO
+
+  GUI:                           NONE
+    VTK support:                 NO
+    Built-in Unicode font:       YES
+
+  Media I/O: 
+    ZLib:                        /usr/lib64/libz.so (ver 1.2.11)
+    JPEG:                        build-libjpeg-turbo (ver 3.1.2-70)
+      SIMD Support Request:      YES
+      SIMD Support:              YES
+    WEBP:                        build (ver decoder: 0x0210, encoder: 0x0210, demux: 0x0107)
+    AVIF:                        avif (ver 1.4.2)
+    PNG:                         /usr/local/lib/libpng.so (ver 1.6.58)
+      Metadata Support:          EXIF XMP ICC cICP
+    TIFF:                        build (ver 42 - 4.7.1)
+    JPEG 2000:                   build (ver 2.5.3)
+    OpenEXR:                     NO
+    GIF:                         YES
+    HDR:                         YES
+    SUNRASTER:                   YES
+    PXM:                         YES
+    PFM:                         YES
+
+  Video I/O:
+    FFMPEG:                      YES
+      avcodec:                   YES (62.28.101)
+      avformat:                  YES (62.12.101)
+      avutil:                    YES (60.26.101)
+      swscale:                   YES (9.5.101)
+    GStreamer:                   NO
+    v4l/v4l2:                    YES (linux/videodev2.h)
+    Orbbec:                      NO
+
+  Parallel framework:            pthreads
+
+  Trace:                         YES (with Intel ITT(3.25.4))
+
+  Other third-party libraries:
+    Lapack:                      YES (OpenBLAS /usr/lib64/libopenblasp.so)
+    DNN MLAS:                    YES (SGEMM-only, vendored)
+      ASM kernels:               YES (ARM64: NEON SGEMM, NEON SGEMV)
+    Eigen:                       NO
+    Custom HAL:                  YES (carotene (ver 0.0.1) KleidiCV (ver 26.03))
+    Protobuf:                    build (3.19.1)
+    Flatbuffers:                 builtin/3rdparty (25.9.23)
+
+  OpenCL:                        YES (no extra features)
+    Include path:                /io/opencv/3rdparty/include/opencl/1.2
+    Link libraries:              Dynamic load
+
+  ONNX Runtime:                  NO
+
+  Python 3:
+    Interpreter:                 /opt/python/cp39-cp39/bin/python3.9 (ver 3.9.25)
+    Libraries:                   libpython3.9m.a (ver 3.9.25)
+    Limited API:                 YES (ver 0x03060000)
+    numpy:                       /home/ci/.local/lib/python3.9/site-packages/numpy/_core/include (ver 2.0.2)
+    install path:                python/cv2/python-3
+
+  Python (for build):            /opt/python/cp39-cp39/bin/python3.9
+
+  Java:                          
+    ant:                         NO
+    Java:                        NO
+    JNI:                         NO
+    Java wrappers:               NO
+    Java tests:                  NO
+
+  Install to:                    /io/_skbuild/linux-aarch64-3.9/cmake-install
+-----------------------------------------------------------------
+
+

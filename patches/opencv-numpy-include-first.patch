@@ -1,0 +1,17 @@
+diff --git a/modules/python/common.cmake b/modules/python/common.cmake
+index e9375af2c0..08df81c7df 100644
+--- a/modules/python/common.cmake
++++ b/modules/python/common.cmake
+@@ -3,9 +3,11 @@ set(PYTHON_SOURCE_DIR "${CMAKE_CURRENT_LIST_DIR}")
+ 
+ ocv_add_module(${MODULE_NAME} BINDINGS PRIVATE_REQUIRED opencv_python_bindings_generator)
+ 
++# NumPy headers first: Debian/Ubuntu python3-numpy installs /usr/include/python3.X/numpy, which
++# would otherwise shadow the NumPy 2 headers of the build venv.
+ include_directories(SYSTEM
+-    "${${PYTHON}_INCLUDE_PATH}"
+     ${${PYTHON}_NUMPY_INCLUDE_DIRS}
++    "${${PYTHON}_INCLUDE_PATH}"
+ )
+ ocv_module_include_directories(
+     "${PYTHON_SOURCE_DIR}/src2"
